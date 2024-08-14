@@ -1,0 +1,120 @@
+/* Dashboard.css */
+
+.dashboard {
+  display: flex;
+  height: 100vh; /* Assure que le conteneur principal occupe toute la hauteur de l'écran */
+  background: linear-gradient(135deg, #74ebd5 0%, #acb6e5 100%);
+  margin: 0; /* Élimine les marges par défaut */
+}
+
+.sidebar {
+  width: 250px;
+  background-color: #222;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2);
+  height: 100vh; /* Assure que la barre latérale occupe toute la hauteur de l'écran */
+  position: fixed; /* Fixe la barre latérale sur le côté gauche */
+}
+
+.sidebar .logo h2 {
+  margin-bottom: 40px;
+  font-size: 24px;
+}
+
+.nav-links {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.nav-links li {
+  width: 100%;
+}
+
+.nav-links li a {
+  display: block;
+  padding: 15px 20px;
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.nav-links li a:hover {
+  background-color: #007bff;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  background-color: #f9fafc;
+  margin-left: 250px; /* Espace pour la barre latérale */
+  overflow-y: auto;
+  height: 100vh; /* Assure que la zone de contenu occupe toute la hauteur de l'écran */
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #ddd;
+}
+
+header h1 {
+  font-size: 100px;
+  color: #333;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-info img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-info span {
+  font-size: 16px;
+  color: #555;
+}
+
+.cards-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  color: #222;
+}
+
+.card p {
+  font-size: 24px;
+  color: #007bff;
+  font-weight: bold;
+}
