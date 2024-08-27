@@ -1,7 +1,6 @@
 import React from 'react';
-import Sidebar from './Sidebar';
-import Header from './Header';
-import Card from './Card';
+import Sidebar from '../Assets/Sidebar';
+import Header from '../Assets/Header';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -12,12 +11,10 @@ const Dashboard = () => {
             <Sidebar />
             <div className="main-content">
                 <Header userName={userName} />
-                <section className="cards-section">
-                    <Card title="Total Courses" value="12" />
-                    <Card title="Courses Completed" value="8" />
-                    <Card title="Courses In Progress" value="4" />
-                    <Card title="Messages" value="3 New" />
-                </section>
+                
+                <div className="dashboard-widgets">
+                    
+                </div>
             </div>
         </div>
     );

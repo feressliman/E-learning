@@ -1,0 +1,82 @@
+/* Sidebar Styles */
+.sidebar {
+    width: 250px;
+    background-color: #222;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.2);
+    height: 100vh; /* Assure que la barre latérale occupe toute la hauteur de l'écran */
+    position: fixed; /* Fixe la barre latérale sur le côté gauche */
+  }
+  
+  .sidebar .logo h2 {
+    margin-bottom: 40px;
+    font-size: 24px;
+  }
+  
+  .nav-links {
+    list-style: none;
+    padding: 0;
+    width: 100%;
+  }
+  
+  .nav-links li {
+    width: 100%;
+  }
+  
+  .nav-links li a {
+    display: block;
+    padding: 15px 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background 0.3s ease;
+  }
+  
+  .nav-links li a:hover {
+    background-color: #000;
+  }
+
+  /* Header Styles */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  margin: 0; /* Supprime toute marge supplémentaire */
+  border-bottom: 2px solid #ddd;
+
+}
+
+header h1 {
+  font-size: 36px;
+  color: #ffffff;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-info img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.user-info span {
+  font-size: 16px;
+  color: #ffffff;
+}
+
+/* Icon Styling */
+.icon {
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+
