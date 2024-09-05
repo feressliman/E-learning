@@ -13,32 +13,30 @@ const Loginform = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/login', { email, password });
-      console.log('Response Data:', response.data);
-
+      const response = await axios.post(
+        'http://localhost:5000/api/auth/login',
+        { email, password },
+        { withCredentials: true }  // Autoriser l'envoi des cookies avec la requête
+      );
+    
       if (response.data.token) {
-        localStorage.setItem('token', response.data.token);  // Store the token if needed
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('role', response.data.role);
         setMessage('Login successful');
         setTimeout(() => {
-          navigate('/Dashboard');  // Navigate to the Dashboard
-        }, 50); 
+          navigate('/Dashboard');
+        }, 50);
       } else {
         setMessage(response.data.msg || 'Login failed. Please try again later.');
       }
     } catch (error) {
-      console.error('Error:', error.response || error.message);
-
-      if (error.response) {
-        if (error.response.status === 400) {
-          setMessage('Invalid email or password');
-        } else {
-          setMessage(`Error: ${error.response.data.msg || 'Login failed. Please try again later.'}`);
-        }
-      } else {
-        setMessage('Login failed. Please check your network and try again.');
-      }
+      console.error('Erreur lors du login:', error); // Ajoute ce log
+      setMessage(`Error: ${error.response?.data?.msg || 'Login failed. Please try again later.'}`);
     }
   };
+  
+  
+  
 
   return (
     <div className='background'>

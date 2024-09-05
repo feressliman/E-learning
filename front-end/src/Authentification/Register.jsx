@@ -8,7 +8,7 @@ const RegisterForm = () => {
   const [email, setEmail] = useState('');
   const [tel, setTel] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('etudiant'); // Default role
+  const [role, setRole] = useState('etudiant');
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
 
@@ -20,13 +20,13 @@ const RegisterForm = () => {
         email,
         password,
         tel,
-        role, // Include role in the request
+        role,
       });
-      setMessage(response.data.msg || 'Registration successful');
+      setMessage(response.data.msg || 'Inscription réussie');
       navigate('/');
     } catch (error) {
-      console.error('Error:', error.response || error.message);
-      setMessage(error.response?.data.msg || 'Registration failed. Please try again.');
+      console.error('Erreur:', error.response || error.message);
+      setMessage(error.response?.data.msg || 'Échec de l\'inscription. Veuillez réessayer.');
     }
   };
 
@@ -34,11 +34,11 @@ const RegisterForm = () => {
     <div className='background'>
       <div className='wrapper'>
         <form onSubmit={handleSubmit}>
-          <h1>Register</h1>
+          <h1>Inscription</h1>
           <div className="input-box">
             <input
               type="text"
-              placeholder='Username'
+              placeholder='Nom d\utilisateur'
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -53,11 +53,10 @@ const RegisterForm = () => {
               required
             />
           </div>
-          
           <div className="input-box">
             <input
               type="password"
-              placeholder='Password'
+              placeholder='Mot de passe'
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -66,7 +65,7 @@ const RegisterForm = () => {
           <div className="input-box">
             <input
               type="text"
-              placeholder='Tel'
+              placeholder='Téléphone'
               value={tel}
               onChange={(e) => setTel(e.target.value)}
               required
@@ -74,24 +73,20 @@ const RegisterForm = () => {
           </div>
           <div className="input-box">
             <select
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-            required>
-              <option value="">Select Role</option>
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              required
+            >
+              <option value="">Sélectionner un rôle</option>
               <option value="admin">Admin</option>
               <option value="formateur">Formateur</option>
-              <option value="etudiant">Etudiant</option>
-              </select>
-              </div>
-
-          <div className="remember-forgot">
-            <label><input type="checkbox" />Remember me</label>
-            <a href="#">Forgot password?</a>
+              <option value="etudiant">Étudiant</option>
+            </select>
           </div>
-          <button type="submit">Register</button>
+          <button type="submit">S'inscrire</button>
           {message && <p className="message">{message}</p>}
           <div className="register-link">
-            <p>Have an account? <a href="/">Login</a></p>
+            <p>Vous avez déjà un compte ? <a href="/">Connexion</a></p>
           </div>
         </form>
       </div>

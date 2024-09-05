@@ -4,6 +4,7 @@ const { check, validationResult } = require('express-validator');
 const User = require('../models/user');
 const authController = require('../controllers/authController');
 const router = express.Router();
+
 // @route   POST /api/auth/register
 // @desc    Register user
 // @access  Public
@@ -16,6 +17,7 @@ router.post(
     ],
     authController.register
 );
+
 // @route   POST /api/auth/login
 // @desc    Authenticate user and start session
 // @access  Public
@@ -27,6 +29,7 @@ router.post(
     ],
     authController.login
 );
+
 // @route   GET /api/auth/user
 // @desc    Get user data
 // @access  Private
@@ -42,15 +45,19 @@ router.get('/user', (req, res) => {
             res.status(500).send('Server error');
         });
 });
+
 // @route   POST /api/auth/logout
 // @desc    Logout user
 // @access  Private
 router.post('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
-            return res.status(500).send('Could not log out, please try again.');
+            return res.status(500).json({ msg: 'Erreur lors de la déconnexion' });
         }
-        res.json({ msg: 'Logged out successfully' });
+
+        res.clearCookie('connect.sid');
+        res.json({ msg: 'Déconnexion réussie' });
     });
 });
+
 module.exports = router;

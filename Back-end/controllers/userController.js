@@ -2,9 +2,11 @@ const User = require('../models/user'); // Assurez-vous que le chemin est correc
 
 // Get all users or filter by name if provided
 exports.getUsers = async (req, res) => {
-    const { name } = req.query; // Utiliser req.query pour les paramètres de requête
+    const { name, role } = req.query;
     try {
-        const query = name ? { name } : {}; // Query based on name if provided
+        const query = {};
+        if (name) query.name = name;
+        if (role) query.role = role; // Filtrer par rôle si fourni
         const users = await User.find(query);
         console.log("Users Found: ", users);
         res.json({ msg: "Users Found", users });
@@ -87,17 +89,25 @@ exports.deleteUser = async (req, res) => {
     }
 };
 
-// Get user profile
 exports.getProfile = async (req, res) => {
-    const { id } = req.params;
     try {
-        const user = await User.findById(id);
-        if (!user) {
-            return res.status(404).json({ message: 'Utilisateur non trouvé' });
+        const userId = req.params.id;
+
+        // Vérifiez que l'ID est un ObjectId valide
+        if (!ObjectId.isValid(userId)) {
+            return res.status(400).json({ message: "ID d'utilisateur invalide" });
         }
+
+        // Convertissez l'ID en ObjectId si nécessaire
+        const user = await User.findById(ObjectId(userId));
+
+        if (!user) {
+            return res.status(404).json({ message: "Utilisateur non trouvé" });
+        }
+
         res.json(user);
     } catch (error) {
-        console.error('Erreur lors de la récupération du profil utilisateur:', error);
-        res.status(500).json({ message: 'Erreur du serveur' });
+        console.error("Erreur lors de la récupération du profil utilisateur:", error);
+        res.status(500).json({ message: "Erreur interne du serveur" });
     }
 };

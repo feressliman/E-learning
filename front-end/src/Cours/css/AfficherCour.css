@@ -1,0 +1,57 @@
+.app-container {
+    display: flex;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+.cour-list-container {
+    margin-top: 20px;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cour-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cour-table th, .cour-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.cour-table th {
+    background-color: #f2f2f2;
+}
+
+.icon {
+    cursor: pointer;
+    margin: 0 5px;
+}
+
+.add-icon {
+    font-size: 1.5rem;
+    color: green;
+}
+
+.edit-icon {
+    color: #007bff;
+}
+
+.delete-icon {
+    color: #dc3545;
+}
+
+.cour-video {
+    width: 100px;
+    height: auto;
+    border-radius: 5px;
+}

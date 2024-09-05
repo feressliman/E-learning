@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
     role: {
         type: String,
         enum: ['admin', 'etudiant', 'formateur'],
-        default: 'etudiant'
+        required: true
     },
     tel: {
         type: String,
@@ -27,7 +27,8 @@ const UserSchema = new mongoose.Schema({
     photoprofile: {
         type: String,
         default: 'default-avatar.png'
-    }
+    },
+    
 });
 
 module.exports = mongoose.model('User', UserSchema);

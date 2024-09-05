@@ -1,93 +1,57 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import './Profile.css';
 
-const Profile = ({ userId }) => {
-  const [userData, setUserData] = useState(null);
-
-  // Schéma de validation avec Yup
-  const schema = yup.object().shape({
-    name: yup.string().required('Nom est requis'),
-    email: yup.string().email('Email invalide').required('Email est requis'),
-    tel: yup.string().required('Téléphone est requis'),
-    photoprofile: yup.mixed(), // Ajoute une validation pour le fichier si besoin
-  });
-
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm({
-    resolver: yupResolver(schema),
-  });
+const Profile = () => {
+  const [profile, setProfile] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await axios.get(`/user/getProfile/${userId}`); // Remplace par l'ID utilisateur réel
-        setUserData(response.data);
+    const userId = 'someUserId'; // Remplacez par un ID réel ou obtenez-le dynamiquement
+    const token = localStorage.getItem('token');
 
-        // Pré-remplir les champs du formulaire
-        setValue('name', response.data.name);
-        setValue('email', response.data.email);
-        setValue('tel', response.data.tel);
-        setValue('photoprofile', response.data.photoprofile);
-      } catch (error) {
-        console.error('Erreur lors de la récupération des données utilisateur:', error);
-      }
-    };
+    console.log('Fetching profile for userId:', userId);
+    console.log('Token:', token);
 
-    fetchUserData();
-  }, [userId, setValue]);
-
-  const onSubmit = async (data) => {
-    try {
-      await axios.put(`/user/getProfile/${userId}`, data); // Mettre à jour l'URL avec l'ID utilisateur
-      alert('Profil mis à jour avec succès');
-    } catch (error) {
-      console.error('Erreur lors de la mise à jour du profil:', error);
-      alert('Erreur lors de la mise à jour du profil');
+    if (!token) {
+      setError('Token manquant.');
+      return;
     }
-  };
+
+    axios.get(`http://localhost:5000/user/getProfile/${userId}`, {
+      headers: {
+        'x-auth-token': token
+      }
+    })
+    .then(response => {
+      console.log('Profile data received:', response.data);
+      setProfile(response.data);
+    })
+    .catch(error => {
+      console.error('Error fetching profile:', error);
+      if (error.response) {
+        console.error('Response data:', error.response.data);
+        console.error('Response status:', error.response.status);
+      }
+      setError(error.response ? error.response.data.message : error.message);
+    });
+  }, []);
+
+  if (error) {
+    return <div>Erreur: {error}</div>;
+  }
+
+  if (!profile) {
+    return <div>Chargement...</div>;
+  }
 
   return (
-    <div className="profile-container">
-      <h2>Modifier Profil</h2>
-      {userData ? (
-        <form onSubmit={handleSubmit(onSubmit)} className="profile-form">
-          <div className="form-group">
-            <label>Nom:</label>
-            <input type="text" {...register('name')} />
-            {errors.name && <p>{errors.name.message}</p>}
-          </div>
-
-          <div className="form-group">
-            <label>Email:</label>
-            <input type="email" {...register('email')} />
-            {errors.email && <p>{errors.email.message}</p>}
-          </div>
-
-          <div className="form-group">
-            <label>Téléphone:</label>
-            <input type="text" {...register('tel')} />
-            {errors.tel && <p>{errors.tel.message}</p>}
-          </div>
-
-          <div className="form-group">
-            <label>Photo de profil:</label>
-            <input type="file" {...register('photoprofile')} />
-            {errors.photoprofile && <p>{errors.photoprofile.message}</p>}
-            {userData.photoprofile && (
-              <img src={userData.photoprofile} alt="Avatar" className="avatar" />
-            )}
-          </div>
-
-          <button type="submit" className="submit-button">Mettre à jour</button>
-        </form>
-      ) : (
-        <p>Chargement des données...</p>
-      )}
+    <div>
+      <h1>Profil Utilisateur</h1>
+      <p>Nom: {profile.name || 'Non défini'}</p>
+      <p>Email: {profile.email || 'Non défini'}</p>
+      {/* Afficher d'autres informations du profil */}
     </div>
   );
-};
+}
 
 export default Profile;
